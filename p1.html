@@ -42,14 +42,14 @@
             <div class="row">
                 <div class="col-md-6">
                     <p>Note that the sum of the multiples of 3 below 1000 is 3 + 6 + 9 + 12 + ... + 999 = 3 * (1 + 2 + 3 + 4 + ... + 333).</p>
-                    <p>Also note that the sum of natural numbers from 1 to p is (p*(p+1))/2. This can be proved by mathematical induction.</p>
+                    <p>Also note that the sum of natural numbers from 1 to p is (p * (p + 1)) / 2. This can be proved by mathematical induction.</p>
                     <p>The sum of the multiples of 3 plus the sum of the multiples of 5 would include the multiples of 15 twice, then the sum of the multiples of 15 should be substracted.</p>
-                    <pre>function sumDivBy(d, n) {
+                    <pre>function sumMulOf(d, n) {
     var p = Math.floor((n - 1) / d);
     return d * (p * (p + 1)) / 2;
 }
 function better(n) {
-    return sumDivBy(3, n) + sumDivBy(5, n) - sumDivBy(15, n);
+    return sumMulOf(3, n) + sumMulOf(5, n) - sumMulOf(15, n);
 }</pre>
                 </div>
                 <div class="col-md-6">
@@ -78,12 +78,12 @@ function better(n) {
                 }
                 return sum;
             }
-            function sumDivBy(d, n) {
+            function sumMulOf(d, n) {
                 var p = Math.floor((n - 1) / d);
                 return d * (p * (p + 1)) / 2;
             }
             function better(n) {
-                return sumDivBy(3, n) + sumDivBy(5, n) - sumDivBy(15, n);
+                return sumMulOf(3, n) + sumMulOf(5, n) - sumMulOf(15, n);
             }
             $("#test1").click(function() {
                 var n = parseInt($("#n1").val());
