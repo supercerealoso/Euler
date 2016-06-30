@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Project Euler 3</title>
+        <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
+    </head>
+    <body>
+        <div class="container">
+            <a href="https://projecteuler.net/problem=3"><h1>Project Euler 3</h1></a>
+            <p>The prime factors of 13195 are 5, 7, 13 and 29.</p>
+            <p>What is the largest prime factor of the number 600851475143?</p>
+            <h2>Simple Solution</h2>
+            <div class="row">
+                <div class="col-md-6">
+                    <p>One by one, until 600851475143.</p>
+                    <pre>function simple(n) {
+    var factor = 2;
+    var lastFactor = 1;
+    while (n > 1) {
+        if (n % factor === 0) {
+            lastFactor = factor;
+            n = n / factor;
+            while (n % factor === 0)
+                n = n / factor;
+        }
+        factor = factor + 1;
+    }
+    return lastFactor;
+}</pre>
+                </div>
+                <div class="col-md-6">
+                    <label>Value for n</label>
+                    <div class="input-group">
+                        <input type="text" class="form-control" value="600851475143" id="n1"/>
+                        <span class="input-group-btn">
+                            <button class="btn btn-primary" type="button" id="test1">Test</button>
+                        </span>
+                    </div>
+                    <label>Result</label>
+                    <input type="text" class="form-control" id="r1" value=""/>
+                    <label>Time in milliseconds</label>
+                    <input type="text" class="form-control" id="t1" value=""/>
+                </div>
+            </div>
+            <h2>Better Solution</h2>
+            <div class="row">
+                <div class="col-md-6">
+                    <p>Note that 2 is the only even prime number. All other even numbers can be ommited.</p>
+                    <p>Also note that the first prime factor of a number is never close to itself, only if the number is a prime. In fact, a composite number n must have a prime factor that is smaller than the square root of n, otherwhise n is prime.</p>
+                    <p>n = a * b</p>
+                    <p>b &ne; 1 because n is not prime</p>
+                    <p>b &le; a because a is the smallest factor</p>
+                    <p>If a &gt; &radic;n, then b &le; &radic;n. But that is imposisible because n = &radic;n * &radic;n = a * b</p>
+                    <p>then, a &le; &radic;n
+                    <pre>function better(n) {
+    var lastFactor;
+    if (n % 2 === 0) {
+        lastFactor = 2;
+        n = n / 2;
+        while (n % 2 === 0)
+            n = n / 2;
+    }
+    else
+        lastFactor = 1;
+    var factor = 3;
+    var maxFactor = Math.sqrt(n);
+    while (n > 1 && factor <= maxFactor) {
+        if (n % factor === 0) {
+            n = n / factor;
+            lastFactor = factor;
+            while (n % factor === 0)
+                n = n / factor;
+            maxFactor = Math.sqrt(n);
+        }
+        factor += 2;
+    }
+    if (n === 1)
+        return lastFactor;
+    else
+        return n;
+}</pre>
+                </div>
+                <div class="col-md-6">
+                    <label>Value for n</label>
+                    <div class="input-group">
+                        <input type="text" class="form-control" value="600851475143" id="n2"/>
+                        <span class="input-group-btn">
+                            <button class="btn btn-primary" type="button" id="test2">Test</button>
+                        </span>
+                    </div>
+                    <label>Result</label>
+                    <input type="text" class="form-control" id="r2" value=""/>
+                    <label>Time in milliseconds</label>
+                    <input type="text" class="form-control" id="t2" value=""/>
+                </div>
+            </div>
+        </div>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+        <script>
+            function simple(n) {
+                var factor = 2;
+                var lastFactor = 1;
+                while (n > 1) {
+                    if (n % factor === 0) {
+                        lastFactor = factor;
+                        n = n / factor;
+                        while (n % factor === 0)
+                            n = n / factor;
+                    }
+                    factor = factor + 1;
+                }
+                return lastFactor;
+            }
+            function better(n) {
+                var lastFactor;
+                if (n % 2 === 0) {
+                    lastFactor = 2;
+                    n = n / 2;
+                    while (n % 2 === 0)
+                        n = n / 2;
+                }
+                else
+                    lastFactor = 1;
+                var factor = 3;
+                var maxFactor = Math.sqrt(n);
+                while (n > 1 && factor <= maxFactor) {
+                    if (n % factor === 0) {
+                        n = n / factor;
+                        lastFactor = factor;
+                        while (n % factor === 0)
+                            n = n / factor;
+                        maxFactor = Math.sqrt(n);
+                    }
+                    factor += 2;
+                }
+                if (n === 1)
+                    return lastFactor;
+                else
+                    return n;
+            }
+            $("#test1").click(function() {
+                var n = parseInt($("#n1").val());
+                var start = new Date().getTime();
+                var r = simple(n);
+                var end = new Date().getTime();
+                $("#r1").val(r);
+                $("#t1").val(end - start);
+            });
+            $("#test2").click(function() {
+                var n = parseInt($("#n2").val());
+                var start = new Date().getTime();
+                var r = better(n);
+                var end = new Date().getTime();
+                $("#r2").val(r);
+                $("#t2").val(end - start);
+            });
+        </script>
+    </body>
+</html>
